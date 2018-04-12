@@ -1,0 +1,12 @@
+{
+    "name": "ignasius.wahyudi/frii",
+    "authors": [
+        {
+            "name": "ignasius.wahyudi",
+            "email": "ace3xx@gmail.com"
+        }
+    ],
+    "require": {
+        "Josantonius/Session": "^1.1"
+    }
+}
