@@ -5,7 +5,6 @@
     if(isset($_SESSION['cart']))
     {
         $cart = $_SESSION['cart'];
-        
     }
     else {
         $cart = array();
@@ -13,7 +12,6 @@
     }
 
     $index = $_GET['kill'];
-
     unset($cart[$index]);
     $_SESSION['cart'] = $cart;
 }

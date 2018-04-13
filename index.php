@@ -2,7 +2,6 @@
 <?php include_once('cart.php');?>
 <?php include_once('logic.php');?>
 <?php include_once('price.php');?>
-
 <?php //var_dump($profile); die();?>
 <!doctype html>
 <html lang="en">
@@ -38,7 +37,7 @@
           <ul class="list-group mb-3">
             <?php $subtotal = 0;?>
             <?php $counter =0;?>
-            <?php foreach ($cart as $item):?>                
+            <?php foreach ($cart as $key => $item) :?>       
                 <?php $product_id = $item['product_id'];
                 foreach($products as $product)
                 {
@@ -49,7 +48,7 @@
                             <h6 class="my-0"><?php echo $product['product_name'];?> x <?php echo $item['qty'];?> Pcs</h6>
                             <small class="text-muted"><?php echo $product['description'];?></small>
                             <small class="text-muted">@ Rp. <?php echo number_format($product['price'],0,',','.');?></small>
-                            <small class="text-muted"><a href="kill.php?kill=<?php echo $counter; ?>">Delete</a></small>
+                            <small class="text-muted"><a href="kill.php?kill=<?php echo $key; ?>"><span style="color:red" >X</span></a></small>
                         </div>
                         <?php $total_price = $item['qty'] * $product['price'];
                         $subtotal = $subtotal+$total_price;
