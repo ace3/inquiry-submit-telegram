@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-
+$cart = $_SESSION['cart'];
 if(isset($_POST))
 {
     $product_id = $_POST['product'];
