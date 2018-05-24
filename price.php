@@ -13,4 +13,5 @@ for ($i = 1;$i <10 ; $i++)
 }
 
 
+$satuan = array('METER','ROLL','UNIT','BOX');
 ?>

@@ -24,7 +24,7 @@
       </div>
 
       <div class="row">
-        <div class="col-md-4 order-md-2 mb-4">
+        <div class="col-md-6 order-md-2 mb-4">
           <h4 class="d-flex justify-content-between align-items-center mb-3">
             <span class="text-muted">Your order</span>
             <span class="badge badge-secondary badge-pill"><?php echo $cart_counter;?></span>
@@ -45,7 +45,7 @@
                     {?>
                     <li class="list-group-item d-flex justify-content-between lh-condensed">
                         <div>
-                            <h6 class="my-0"><?php echo $product['product_name'];?> x <?php echo $item['qty'];?> Pcs</h6>
+                            <h6 class="my-0"><?php echo $product['product_name'];?> x <?php echo $item['qty'];?> <?php echo $item['satuan']; ?></h6>
                             <small class="text-muted"><?php echo $product['description'];?></small>
                             <small class="text-muted">@ Rp. <?php echo number_format($product['price'],0,',','.');?></small>
                             <small class="text-muted"><a href="kill.php?kill=<?php echo $key; ?>"><span style="color:red" >X</span></a></small>
@@ -69,7 +69,7 @@
             <button <?php if(sizeof($cart)==0){ echo ' disabled ';}?> type="button" name="message" id="message" class="btn btn-dark btn-lg btn-block">Send Inquiry</button>
           </form>
         </div>
-        <div class="col-md-8 order-md-1">
+        <div class="col-md-6 order-md-1">
           <h4 class="mb-3">Order Information</h4>
           <form  method="post" action="profile.php" class="needs-validation" novalidate>
             <div class="row">
@@ -82,7 +82,7 @@
               </div>
               <div class="col-md-6 mb-3">
                 <label for="phone">Phone</label>
-                <input name="phone" type="number" class="form-control" id="phone" placeholder="" value="<?php if(isset($profile['phone'])) { echo $profile['phone'];}?>" required>
+                <input name="phone" type="text" class="form-control" id="phone" placeholder="" value="<?php if(isset($profile['phone'])) { echo $profile['phone'];}?>" required>
                 <div class="invalid-feedback">
                   Valid Phone is required.
                 </div>
@@ -92,6 +92,14 @@
               <label for="address">Address</label>
               <textarea class="form-control" name="address" id="address" rows="3"><?php if(isset($profile['address'])) { echo $profile['address'];}?></textarea>
             </div>
+
+            <div class="form-group">
+              <label for="expedisi">Expedisi</label>
+              <textarea class="form-control" name="expedisi" id="expedisi" rows="3"><?php if (isset($profile['expedisi'])) {
+                                                                                    echo $profile['expedisi'];
+                                                                                  } ?></textarea>
+            </div>
+
             <div class="mb-3">
               <label for="email">Email <span class="text-muted">(Required)</span></label>
               <input type="email" class="form-control" id="email" placeholder="you@example.com" value="<?php if(isset($profile['email'])) { echo $profile['email'];}?>" name="email" required >
@@ -154,33 +162,46 @@
 <!-- Modal -->
 
 <!-- The Modal -->
-<div class="modal fade" id="myModal">
-  <div class="modal-dialog">
+<div class="modal fade mx-auto" id="myModal">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
-    <form method="post" class="needs-validation" novalidate action="add_cart.php">
+    <form method="post" class="needs-validation" novalidate action="add_cart.php" style="
+    margin-left: 10px;
+    margin-right: 10px;
+">
       <!-- Modal Header -->
       <div class="modal-header">
         <h4 class="modal-title">Select new Product</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
         <div class="form-group">
-        <label for="product">Product Selet</label>
+        <label for="product">Product Select</label>
         <select class="form-control" name="product" id="product">
         <?php foreach ($products as $value) :?>
             <option value="<?php echo $value['id'];?>"><?php echo $value['product_name'];?></option>
             <?php endforeach;?>
         </select>
         </div>
-      
+
       <div class="form-group">
         <label for="qty">Qty</label>
         <input type="number" required class="form-control" name="qty" id="qty" aria-describedby="qtyId" placeholder="Input Qty of Product">
         <small id="qtyId" class="form-text text-muted">Please input valid Qty</small>
       </div>
 
+      <div class="form-group">
+        <label for="satuan">Satuan</label>
+        <select class="form-control" name="satuan" id="satuan">
+        <?php foreach ($satuan as $value) : ?>
+            <option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+            <?php endforeach; ?>
+        </select>
+        </div>
+
+
       <!-- Modal footer -->
       <div class="modal-footer">
-        <button type="submit" class="btn btn-warning">Close</button>
+        <button type="submit" class="btn btn-warning">Add</button>
       </div>
 </form>
     </div>
