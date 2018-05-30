@@ -6,10 +6,9 @@ if(isset($_POST))
 {
     $product_id = $_POST['product'];
     $qty = $_POST['qty'];
-    $satuan = $_POST['satuan'];
-
+    
     $cart_item = array('product_id'=>$product_id,
-    'qty'=>$qty, 'satuan' => $satuan
+    'qty'=>$qty
     );
     $cart[] = $cart_item;
 }

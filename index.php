@@ -13,12 +13,13 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+     <link rel="stylesheet" href="bower_components/select2/dist/css/select2.min.css">
   </head>
   <body class="bg-light">
 
     <div class="container">
       <div class="py-5 text-center">
-        <img class="d-block mx-auto mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+        <img class="d-block mx-auto mb-4" src="sticker.svg" alt="" width="72" height="72">
         <h2>Checkout form</h2>
         <p class="lead">Below is an example form built entirely with Bootstrap's form controls. Each required form group has a validation state that can be triggered by attempting to submit the form without completing it.</p>
       </div>
@@ -41,11 +42,14 @@
                 <?php $product_id = $item['product_id'];
                 foreach($products as $product)
                 {
+                  
                     if($product['id']== $product_id)
-                    {?>
+                    {
+                      ?>
                     <li class="list-group-item d-flex justify-content-between lh-condensed">
                         <div>
-                            <h6 class="my-0"><?php echo $product['product_name'];?> x <?php echo $item['qty'];?> <?php echo $item['satuan']; ?></h6>
+                          
+                            <h6 class="my-0"><?php echo $product['product_name'];?> x <?php echo $item['qty'];?> <?php echo $product['unit_name']; ?></h6>
                             <small class="text-muted"><?php echo $product['description'];?></small>
                             <small class="text-muted">@ Rp. <?php echo number_format($product['price'],0,',','.');?></small>
                             <small class="text-muted"><a href="kill.php?kill=<?php echo $key; ?>"><span style="color:red" >X</span></a></small>
@@ -132,6 +136,7 @@
     <script src="bower_components/bootstrap4/assets/js/vendor/popper.min.js"></script>
     <script src="bower_components/bootstrap4/dist/js/bootstrap.min.js"></script>
     <script src="bower_components/bootstrap4/assets/js/vendor/holder.min.js"></script>
+    <script src="bower_components/select2/dist/js/select2.min.js"></script>
     <script>
       // Example starter JavaScript for disabling form submissions if there are invalid fields
       (function() {
@@ -154,10 +159,13 @@
         }, false);
       })();
     </script>
+    <script>
+    $(document).ready(function() {
+    $('.product').select2({width: 'resolve'});
+});
+</script>
   </body>
 </html>
-
-
 
 <!-- Modal -->
 
@@ -176,9 +184,9 @@
       </div>
         <div class="form-group">
         <label for="product">Product Select</label>
-        <select class="form-control" name="product" id="product">
+        <select class="form-control product" name="product" id="product"  style="width:100%;">
         <?php foreach ($products as $value) :?>
-            <option value="<?php echo $value['id'];?>"><?php echo $value['product_name'];?></option>
+            <option value="<?php echo $value['id'];?>"><?php echo $value['product_name'];?> - <?php echo $value['unit_name']; ?></option>
             <?php endforeach;?>
         </select>
         </div>
@@ -188,16 +196,6 @@
         <input type="number" required class="form-control" name="qty" id="qty" aria-describedby="qtyId" placeholder="Input Qty of Product">
         <small id="qtyId" class="form-text text-muted">Please input valid Qty</small>
       </div>
-
-      <div class="form-group">
-        <label for="satuan">Satuan</label>
-        <select class="form-control" name="satuan" id="satuan">
-        <?php foreach ($satuan as $value) : ?>
-            <option value="<?php echo $value; ?>"><?php echo $value; ?></option>
-            <?php endforeach; ?>
-        </select>
-        </div>
-
 
       <!-- Modal footer -->
       <div class="modal-footer">
