@@ -2,7 +2,6 @@
 
 include_once 'database.php';
 
-
 $categoryId = $_POST['category'];
 echo '<option value="">Select Product</option>';
 
@@ -14,7 +13,6 @@ on products.category_id = subcategory.id
 left join sma_units units
 on products.unit = units.id
 where products.category_id = ".$categoryId);
-
 
 $products = array();
 
@@ -36,7 +34,6 @@ foreach ($products as $key => $value) {
 $code = $value['id'];
 $name_value = $value['product_name'];
     echo "<option value='" . $code . "'>". $name_value . "</option>";
-
 }
 
 ?>

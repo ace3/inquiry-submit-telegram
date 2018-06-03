@@ -1,7 +1,6 @@
 <?php
 
 $cat = R::getAll('select id , name from sma_categories where id in(select distinct category_id from sma_products)');
-
 $categories = array();
 
 foreach ($cat as $key => $value) {

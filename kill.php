@@ -15,8 +15,6 @@
     unset($cart[$index]);
     $_SESSION['cart'] = $cart;
 }
-
 $newURL = 'index.php';
 header('Location: '.$newURL);
-
 ?>

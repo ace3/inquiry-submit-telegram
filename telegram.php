@@ -2,13 +2,11 @@
 // Load composer
 require __DIR__ . '/vendor/autoload.php';
 
-
 $dotenv = new Dotenv\Dotenv(__DIR__);
 $dotenv->load();
 $bot_api_key = getenv('BOT_API_KEY');
 $bot_username = getenv('BOT_USERNAME');
 $chat_id = getenv('BOT_CHAT_ID');
-
 
 $telegram = new Longman\TelegramBot\Telegram($bot_api_key, $bot_username);
 
