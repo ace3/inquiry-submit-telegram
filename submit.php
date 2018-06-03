@@ -89,7 +89,7 @@ $string .= 'HP: ' . $profile['phone'] . $separator . $separator;
 $string .= 'EMAIL: ' . $profile['email'] . $separator . $separator;
 $string .= '### HARAP FOLLOWUP VIA WA/SMS/TELP/EMAIL ###';
 
-sendMessage($string);
+sendMessage($string,$chat_id);
 
 $newURL = 'index.php';
 unset($_SESSION['cart']); 
