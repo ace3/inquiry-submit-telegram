@@ -218,7 +218,7 @@ $(document).ready(function(){
 <?php 
 if($_SESSION['message']!= NULL):?>
 <script>
-alert('Your order has been sent');
+alert('<?php echo $_SESSION['message'];?>');
 </script>
 <?php UNSET($_SESSION['message']);
 endif;?>
