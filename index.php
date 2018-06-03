@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
      <link rel="stylesheet" href="bower_components/select2/dist/css/select2.min.css">
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+
   </head>
   <body class="bg-light">
 
@@ -144,6 +146,9 @@
     <script src="bower_components/bootstrap4/dist/js/bootstrap.min.js"></script>
     <script src="bower_components/bootstrap4/assets/js/vendor/holder.min.js"></script>
     <script src="bower_components/select2/dist/js/select2.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+
     <script>
       // Example starter JavaScript for disabling form submissions if there are invalid fields
       (function() {
@@ -196,12 +201,24 @@ $(document).ready(function(){
 </script>
 
 <script>
+  $('.selectpicker').selectpicker({
+  style: 'btn-info',
+  size: 4
+});
+
   $(document).ready(function(){
+
+    $('.selectpicker').selectpicker({
+  style: 'btn-info',
+  size: 4
+});
+
+
 $( ".qty" ).change(function() {
       $product_id = $('#product').val();
       $qty = $('#qty').val();
 
-      if($qty!=='' && $product_id!== null)
+      if($qty!=='' && $product_id!== ''&& $product_id!== null && $qty!==null)
       {
 console.log($product_id);
 $.ajax({
@@ -222,7 +239,6 @@ else
   });
   
 </script>
-
   </body>
 </html>
 
@@ -255,13 +271,13 @@ else
 
         <div class="form-group">
         <label for="product">Product Select</label>
-        <select required class="form-control product" name="product" id="product"  style="width:100%;">
+        <select required class="form-control product selectpicker" name="product" id="product"  style="width:100%;">
         </select>
         </div>
 
       <div class="form-group">
         <label for="qty">Qty</label>
-        <input type="number" required class="form-control qty" name="qty" id="qty" aria-describedby="qtyId" placeholder="Input Qty of Product">
+        <input type="number" required class="form-control qty selectpicker" name="qty" id="qty" aria-describedby="qtyId" placeholder="Input Qty of Product">
         <small id="qtyId" class="form-text text-muted">Please input valid Qty</small>
       </div>
 

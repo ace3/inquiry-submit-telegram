@@ -4,7 +4,7 @@ include_once 'database.php';
 
 
 $categoryId = $_POST['category'];
-echo "<option value="">Select Product</option>";
+echo '<option value="">Select Product</option>';
 
 $result = R::getAll("select products.id , products.`code`, products.`name`, category.`name` as category_name ,category.`id` as category_id,  subcategory.`name` as subcategory_name , units.`name` as unit_name  , products.`price` from sma_products products
 left join sma_categories category
@@ -15,7 +15,6 @@ left join sma_units units
 on products.unit = units.id
 where products.category_id = ".$categoryId);
 
-R::close();
 
 $products = array();
 
