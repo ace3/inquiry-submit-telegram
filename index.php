@@ -73,7 +73,9 @@
           </ul>
 
           <form method="post" action="submit.php" class="card p-2">
-            <button <?php if(sizeof($cart)==0){ echo ' disabled ';}?> type="submit" class="btn btn-dark btn-lg btn-block">Send Inquiry</button>
+            <button <?php if(sizeof($cart)==0){ echo ' disabled ';}?> <?php if (sizeof($profile) == 0) {
+                                                                        echo ' disabled ';
+                                                                      } ?> type="submit" class="btn btn-dark btn-lg btn-block">Send Inquiry</button>
           </form>
         </div>
         <div class="col-md-6 order-md-1">
