@@ -21,7 +21,7 @@ $subtotal_price = $eachprice*$qty;
 
 $subtotal_price = number_format($subtotal_price,0,",",".");
 
-echo '<h4>Example <span class="label label-default">Subtotal Price: '.$subtotal_price.'</span></h4>';
+echo '<h4><span class="label label-default">Subtotal: Rp. '.$subtotal_price.' ('.$qty.' x Rp. '.number_format($eachprice,0,",",".").')</span></h4>';
 ?>
 
 

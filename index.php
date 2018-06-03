@@ -47,18 +47,19 @@
                     if($product['id']== $product_id)
                     {
                       ?>
-                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                      <?php $total_price = $item['qty'] * $product['price'];
+                      $subtotal = $subtotal + $total_price;
+                      ?>
+                    <li class="list-group-item  justify-content-between lh-condensed">
                         <div>
-                          
-                            <h6 class="my-0"><?php echo $product['product_name'];?> x <?php echo $item['qty'];?> <?php echo $product['unit_name']; ?></h6>
-                            <small class="text-muted">Notes: <?php echo $item['notes'];?></small><br/>
-                            <small class="text-muted">@ Rp. <?php echo number_format($product['price'],0,',','.');?></small>
+                            <h6 class="my-0"><?php echo $product['product_name'];?> x <?php echo $item['qty'];?> <?php echo $product['unit_name']; ?></h6> 
+                            <span class="text-muted pull-right" ><h1>&nbsp&nbsp<a style="color:red;" href="kill.php?kill=<?php echo $key; ?>"><i class="fa fa-trash align-top"></i></a></h1></span>
+                            <h6><small class="text-muted">Notes: <?php echo $item['notes']; ?></small></h6>
+
+                            <span class="pull-left"><small class="text-muted"><?php echo $item['qty']; ?> x Rp. <?php echo number_format($product['price'], 0, ',', '.'); ?></small></span>
+                            <span class="pull-right"><span class="text-muted">Rp. <?php echo number_format($total_price, 0, ',', '.'); ?></span></span>
                         </div>
-                        <?php $total_price = $item['qty'] * $product['price'];
-                        $subtotal = $subtotal+$total_price;
-                        ?>
-                        <span class="text-muted">Rp. <?php echo number_format($total_price,0,',','.');?></span>
-                        <span class="text-muted" ><h1><a style="color:red;" href="kill.php?kill=<?php echo $key; ?>"><i class="fa fa-trash"></i></a></h1></span>
+                
                     </li>
                     <?php }
                 }?>   
@@ -236,7 +237,7 @@ $.ajax({
         <!-- Select Category first -->
         <div class="form-group">
         <label for="product">Category Select</label>
-        <select class="form-control product category" name="category" id="category"  style="width:100%;">
+        <select required class="form-control product category" name="category" id="category"  style="width:100%;">
           <option>Select Category</option>
         <?php foreach ($categories as $value) : ?>
             <option value="<?php echo $value['id']; ?>"><?php echo $value['name']; ?></option>
@@ -246,7 +247,7 @@ $.ajax({
 
         <div class="form-group">
         <label for="product">Product Select</label>
-        <select class="form-control product" name="product" id="product"  style="width:100%;">
+        <select class="form-control product" name="product" id="product"  style="width:100%;" required>
         <!-- <?php foreach ($products as $value) :?>
             <option value="<?php echo $value['id'];?>"><?php echo $value['product_name'];?> - <?php echo $value['unit_name']; ?></option>
             <?php endforeach;?> -->

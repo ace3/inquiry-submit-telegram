@@ -7,4 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Josantonius\\Session\\' => array($vendorDir . '/josantonius/session/src'),
+    'Dotenv\\' => array($vendorDir . '/vlucas/phpdotenv/src'),
 );
