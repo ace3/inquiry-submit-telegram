@@ -131,8 +131,13 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
     <script>window.jQuery || document.write('<script src="bower_components/bootstrap4/assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    
     <script src="bower_components/bootstrap4/assets/js/vendor/popper.min.js"></script>
     <script src="bower_components/bootstrap4/dist/js/bootstrap.min.js"></script>
     <script src="bower_components/bootstrap4/assets/js/vendor/holder.min.js"></script>
@@ -164,6 +169,34 @@
     $('.product').select2({width: 'resolve'});
 });
 </script>
+  <script type="text/javascript">
+$(document).ready(function(){
+    $('#category').on("change",function () {
+        var categoryId = $(this).find('option:selected').val();
+
+        $.ajax({
+  type: 'POST',
+  url: "ajax.php",
+  data: "category="+categoryId,
+  success: function (response) {
+                console.log(response);
+                $("#product").html(response);
+            }
+});
+});
+});
+        // $.ajax({
+        //     url: "ajax.php",
+        //     type: "POST",
+        //     data: "categoryId="+categoryId,
+        //     success: function (response) {
+        //         console.log(response);
+        //         $("#product").html(response);
+        //     },
+        // });
+    
+
+</script>
   </body>
 </html>
 
@@ -182,12 +215,24 @@
         <h4 class="modal-title">Select new Product</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
+
+        <!-- Select Category first -->
+        <div class="form-group">
+        <label for="product">Category Select</label>
+        <select class="form-control product category" name="category" id="category"  style="width:100%;">
+          <option>Select Category</option>
+        <?php foreach ($categories as $value) : ?>
+            <option value="<?php echo $value['id']; ?>"><?php echo $value['name']; ?></option>
+            <?php endforeach; ?>
+        </select>
+        </div>
+
         <div class="form-group">
         <label for="product">Product Select</label>
         <select class="form-control product" name="product" id="product"  style="width:100%;">
-        <?php foreach ($products as $value) :?>
+        <!-- <?php foreach ($products as $value) :?>
             <option value="<?php echo $value['id'];?>"><?php echo $value['product_name'];?> - <?php echo $value['unit_name']; ?></option>
-            <?php endforeach;?>
+            <?php endforeach;?> -->
         </select>
         </div>
 
