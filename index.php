@@ -173,7 +173,7 @@
     </script>
     <script>
     $(document).ready(function() {
-    $('.product').select2({width: 'resolve'});
+    $('.products').select2({width: 'resolve'});
 });
 </script>
   <script type="text/javascript">
@@ -201,18 +201,11 @@ $(document).ready(function(){
 </script>
 
 <script>
-  $('.selectpicker').selectpicker({
-  style: 'btn-info',
-  size: 4
-});
+  
 
   $(document).ready(function(){
 
-    $('.selectpicker').selectpicker({
-  style: 'btn-info',
-  size: 4
-});
-
+    
 
 $( ".qty" ).change(function() {
       $product_id = $('#product').val();
@@ -271,13 +264,13 @@ else
 
         <div class="form-group">
         <label for="product">Product Select</label>
-        <select required class="form-control product selectpicker" name="product" id="product"  style="width:100%;">
+        <select required class="form-control product " name="product" id="product"  style="width:100%;">
         </select>
         </div>
 
       <div class="form-group">
         <label for="qty">Qty</label>
-        <input type="number" required class="form-control qty selectpicker" name="qty" id="qty" aria-describedby="qtyId" placeholder="Input Qty of Product">
+        <input type="number" required class="form-control qty " name="qty" id="qty" aria-describedby="qtyId" placeholder="Input Qty of Product">
         <small id="qtyId" class="form-text text-muted">Please input valid Qty</small>
       </div>
 
