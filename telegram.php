@@ -10,7 +10,7 @@ $chat_id = getenv('BOT_CHAT_ID');
 
 $telegram = new Longman\TelegramBot\Telegram($bot_api_key, $bot_username);
 
-function sendMessage($message, $chat_id = '399733045')
+function sendMessage($message, $chat_id = '553617256')
 {
     try {
         $result = Longman\TelegramBot\Request::sendMessage(['chat_id' => $chat_id, 'text' => $message]);

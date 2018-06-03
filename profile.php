@@ -7,7 +7,6 @@ if(isset($_POST))
 }
 $_SESSION['profile'] = $profile;
 
-
 $newURL = 'index.php';
 header('Location: '.$newURL);
 ?>
