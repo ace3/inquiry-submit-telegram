@@ -2,7 +2,6 @@
 <?php include_once('cart.php');?>
 <?php include_once('logic.php');?>
 <?php include_once('price.php');?>
-<?php //var_dump($profile); die();?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -74,7 +73,7 @@
           </ul>
 
           <form method="post" action="submit.php" class="card p-2">
-            <button <?php if(sizeof($cart)==0){ echo ' disabled ';}?> type="button" name="message" id="message" class="btn btn-dark btn-lg btn-block">Send Inquiry</button>
+            <button <?php if(sizeof($cart)==0){ echo ' disabled ';}?> type="submit" class="btn btn-dark btn-lg btn-block">Send Inquiry</button>
           </form>
         </div>
         <div class="col-md-6 order-md-1">

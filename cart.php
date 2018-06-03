@@ -1,5 +1,8 @@
 <?php 
-session_start();
+//if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+//}
+
 //check if cart already initialized
 if(isset($_SESSION['cart']))
 {
