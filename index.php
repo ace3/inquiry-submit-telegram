@@ -14,6 +14,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
      <link rel="stylesheet" href="bower_components/select2/dist/css/select2.min.css">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
   </head>
   <body class="bg-light">
 
@@ -50,14 +51,14 @@
                         <div>
                           
                             <h6 class="my-0"><?php echo $product['product_name'];?> x <?php echo $item['qty'];?> <?php echo $product['unit_name']; ?></h6>
-                            <small class="text-muted"><?php echo $product['description'];?></small>
+                            <small class="text-muted">Notes: <?php echo $item['notes'];?></small><br/>
                             <small class="text-muted">@ Rp. <?php echo number_format($product['price'],0,',','.');?></small>
-                            <small class="text-muted"><a href="kill.php?kill=<?php echo $key; ?>"><span style="color:red" >X</span></a></small>
                         </div>
                         <?php $total_price = $item['qty'] * $product['price'];
                         $subtotal = $subtotal+$total_price;
                         ?>
                         <span class="text-muted">Rp. <?php echo number_format($total_price,0,',','.');?></span>
+                        <span class="text-muted" ><h1><a style="color:red;" href="kill.php?kill=<?php echo $key; ?>"><i class="fa fa-trash"></i></a></h1></span>
                     </li>
                     <?php }
                 }?>   
@@ -171,6 +172,12 @@
 </script>
   <script type="text/javascript">
 $(document).ready(function(){
+
+  $('#product').on('change',function(){
+    $("#qty").val('') ;
+                $("#price").html('');
+  });
+
     $('#category').on("change",function () {
         var categoryId = $(this).find('option:selected').val();
 
@@ -185,18 +192,28 @@ $(document).ready(function(){
 });
 });
 });
-        // $.ajax({
-        //     url: "ajax.php",
-        //     type: "POST",
-        //     data: "categoryId="+categoryId,
-        //     success: function (response) {
-        //         console.log(response);
-        //         $("#product").html(response);
-        //     },
-        // });
-    
-
 </script>
+
+<script>
+  $(document).ready(function(){
+$( ".qty" ).change(function() {
+      $product_id = $('#product').val();
+      $qty = $('#qty').val();
+
+$.ajax({
+  type: 'POST',
+  url: "ajaxprice.php",
+  data: "product_id="+$product_id+"&qty="+$qty,
+  success: function (response) {
+                console.log(response);
+                $("#price").html(response);
+            }
+});
+});
+  });
+  
+</script>
+
   </body>
 </html>
 
@@ -238,8 +255,17 @@ $(document).ready(function(){
 
       <div class="form-group">
         <label for="qty">Qty</label>
-        <input type="number" required class="form-control" name="qty" id="qty" aria-describedby="qtyId" placeholder="Input Qty of Product">
+        <input type="number" required class="form-control qty" name="qty" id="qty" aria-describedby="qtyId" placeholder="Input Qty of Product">
         <small id="qtyId" class="form-text text-muted">Please input valid Qty</small>
+      </div>
+
+      <div class="form-group">
+        <div class="price" id="price"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="notes">Notes:</label>
+        <textarea class="form-control" rows="3" id="notes" name="notes"></textarea>
       </div>
 
       <!-- Modal footer -->

@@ -1,12 +1,7 @@
 <?php 
 
-include_once('rb-mysql.php');
+include_once 'database.php';
 
-R::setup(
-    'mysql:host=localhost;dbname=sma',
-    'root',
-    'raspberry'
-); //for both mysql or mariaDB
 
 $categoryId = $_POST['category'];
 echo "<option>Select Subcategory</option>";
@@ -26,7 +21,7 @@ $products = array();
 
 foreach ($result as $key => $value) {
     $products_detail = array(
-        'id' => $value['code'],
+        'id' => $value['id'],
         'category_name' => $value['category_name'],
         'subcategory_name' => $value['subcategory_name'],
         'unit_name' => $value['unit_name'],

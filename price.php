@@ -26,7 +26,7 @@ $products = array();
 
 foreach ($result as $key => $value) {
     $products_detail = array(
-        'id' => $value['code'],
+        'id' => $value['id'],
         'category_name' => $value['category_name'],
         'subcategory_name' => $value['subcategory_name'],
         'unit_name' => $value['unit_name'],
