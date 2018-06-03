@@ -201,6 +201,9 @@ $( ".qty" ).change(function() {
       $product_id = $('#product').val();
       $qty = $('#qty').val();
 
+      if($qty!=='' && $product_id!== null)
+      {
+console.log($product_id);
 $.ajax({
   type: 'POST',
   url: "ajaxprice.php",
@@ -210,6 +213,11 @@ $.ajax({
                 $("#price").html(response);
             }
 });
+}
+else
+{
+  alert('please select product first');
+}
 });
   });
   
@@ -238,7 +246,7 @@ $.ajax({
         <div class="form-group">
         <label for="product">Category Select</label>
         <select required class="form-control product category" name="category" id="category"  style="width:100%;">
-          <option>Select Category</option>
+          <option value="">Select Category</option>
         <?php foreach ($categories as $value) : ?>
             <option value="<?php echo $value['id']; ?>"><?php echo $value['name']; ?></option>
             <?php endforeach; ?>
@@ -247,10 +255,7 @@ $.ajax({
 
         <div class="form-group">
         <label for="product">Product Select</label>
-        <select class="form-control product" name="product" id="product"  style="width:100%;" required>
-        <!-- <?php foreach ($products as $value) :?>
-            <option value="<?php echo $value['id'];?>"><?php echo $value['product_name'];?> - <?php echo $value['unit_name']; ?></option>
-            <?php endforeach;?> -->
+        <select required class="form-control product" name="product" id="product"  style="width:100%;">
         </select>
         </div>
 
