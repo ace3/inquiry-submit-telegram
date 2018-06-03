@@ -18,6 +18,13 @@ if (isset($_SESSION['profile'])) {
 }
 
 require_once('telegram.php');
+// Register API keys at https://www.google.com/recaptcha/admin
+$siteKey = getenv('CAPTCHA_SITEKEY');
+$secret = getenv('CAPTCHA_SECRET');
+// reCAPTCHA supported 40+ languages listed here: https://developers.google.com/recaptcha/docs/language
+$lang = 'en';
+
+$recaptcha = new \ReCaptcha\ReCaptcha($secret);
 
 if(sizeof($profile)==0)
 {
@@ -91,6 +98,7 @@ $string .= '### HARAP FOLLOWUP VIA WA/SMS/TELP/EMAIL ###';
 
 sendMessage($string,$chat_id);
 
+$_SESSION['message']= 'Your order has been sent';
 $newURL = 'index.php';
 unset($_SESSION['cart']); 
 header('Location: '.$newURL);

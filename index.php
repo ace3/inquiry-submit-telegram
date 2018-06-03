@@ -2,6 +2,17 @@
 <?php include_once('cart.php');?>
 <?php include_once('logic.php');?>
 <?php include_once('price.php');?>
+
+<?php
+
+require_once('telegram.php');
+// Register API keys at https://www.google.com/recaptcha/admin
+$siteKey = getenv('CAPTCHA_SITEKEY');
+$secret = getenv('CAPTCHA_SECRET');
+// reCAPTCHA supported 40+ languages listed here: https://developers.google.com/recaptcha/docs/language
+$lang = 'en';
+
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -72,7 +83,11 @@
             </li>
           </ul>
 
-          <form method="post" action="submit.php" class="card p-2">
+          <form method="post" action="submit.php" class="card p-2" onsubmit="return confirm('Do you really want to submit the form?');">
+          <div class="g-recaptcha" data-sitekey="<?php echo $siteKey; ?>"></div>
+            <script type="text/javascript"
+                    src="https://www.google.com/recaptcha/api.js?hl=<?php echo $lang; ?>">
+            </script>
             <button <?php if(sizeof($cart)==0){ echo ' disabled ';}?> <?php if (sizeof($profile) == 0) {
                                                                         echo ' disabled ';
                                                                       } ?> type="submit" class="btn btn-dark btn-lg btn-block">Send Inquiry</button>
@@ -91,7 +106,7 @@
               </div>
               <div class="col-md-6 mb-3">
                 <label for="phone">Phone</label>
-                <input name="phone" type="text" class="form-control" id="phone" placeholder="" value="<?php if(isset($profile['phone'])) { echo $profile['phone'];}?>" required>
+                <input maxlength="20" name="phone" type="text" class="form-control txtboxToFilter" id="phone" placeholder="" value="<?php if(isset($profile['phone'])) { echo $profile['phone'];}?>" required>
                 <div class="invalid-feedback">
                   Valid Phone is required.
                 </div>
@@ -200,7 +215,33 @@ $(document).ready(function(){
 });
 });
 </script>
+<?php 
+if($_SESSION['message']!= NULL):?>
+<script>
+alert('Your order has been sent');
+</script>
+<?php UNSET($_SESSION['message']);
+endif;?>
 
+<script>
+$(document).ready(function() {
+    $(".txtboxToFilter").keydown(function (e) {
+        // Allow: backspace, delete, tab, escape, enter and .
+        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+             // Allow: Ctrl+A, Command+A
+            (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) || 
+             // Allow: home, end, left, right, down, up
+            (e.keyCode >= 35 && e.keyCode <= 40)) {
+                 // let it happen, don't do anything
+                 return;
+        }
+        // Ensure that it is a number and stop the keypress
+        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+            e.preventDefault();
+        }
+    });
+});
+</script>
 <script>
   
 
