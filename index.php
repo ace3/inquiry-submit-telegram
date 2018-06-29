@@ -80,7 +80,7 @@ where variants.id = " . $item['variant']);
                             <h6 class="my-0"><?php echo $product['product_name']; ?> x <?php echo $item['qty']; ?> <?php echo $product['unit_name']; ?></h6>
                             <span class="text-muted pull-right" ><h1>&nbsp&nbsp<a style="color:red;" href="kill.php?kill=<?php echo $key; ?>"><i class="fa fa-trash align-top"></i></a></h1></span>
                           	<h6><small class="text-muted">Variant: <?php echo $variant_name; ?></small></h6>
-                            <h6><small class="text-muted" style="word-wrap:break-word !important;" >Notes: <?php echo substr($item['notes'], 0, 55); ?></small></h6>
+                            <h6><small class="text-muted" style="overflow:hidden;text-overflow:ellipsis !important;" >Notes: <?php echo substr($item['notes'], 0, 35); ?></small></h6>
                             <?php if ($variant_cost != 0): ?> <h6><small class="text-muted">Variant Cost: <b><?php echo number_format($variant_cost, 0, ',', '.'); ?></b></small></h6> <?php endif;?>
                             <?php if ($variant_price != 0): ?> <h6><small class="text-muted">Variant Price: <b><?php echo number_format($variant_price, 0, ',', '.'); ?></b></small></h6> <?php endif;?>
                             <span class="pull-left"><small class="text-muted"><?php echo $item['qty']; ?> x Rp. <?php echo number_format($product['price'], 0, ',', '.'); ?></small></span>
@@ -170,6 +170,7 @@ where variants.id = " . $item['variant']);
   src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
   crossorigin="anonymous"></script>
+  <script src="js/number-polyfill.js"></script>
     <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
     <script>window.jQuery || document.write('<script src="bower_components/bootstrap4/assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
 
@@ -177,6 +178,7 @@ where variants.id = " . $item['variant']);
     <script src="bower_components/bootstrap4/dist/js/bootstrap.min.js"></script>
     <script src="bower_components/bootstrap4/assets/js/vendor/holder.min.js"></script>
     <script src="bower_components/select2/dist/js/select2.min.js"></script>
+    <script src="bower_components/jquery-text-counter/textcounter.min.js"></script>
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
 
@@ -276,6 +278,16 @@ $(document).ready(function() {
 <script>
 
   $(document).ready(function(){
+$('#notes').textcounter({
+	type: "character",
+	max: 35,
+	stopInputAtMaximum: true
+});
+
+$('input[name="qty"]').bind('keypress', function(e){
+		var keyCode = (e.which)?e.which:event.keyCode
+		return !(keyCode>31 && (keyCode<48 || keyCode>57));
+	});
 
 $( ".qty" ).change(function() {
       $product_id = $('#product').val();
@@ -357,7 +369,9 @@ else
 
       <div class="form-group">
         <label for="notes">Notes:</label>
-        <textarea maxlength="50" class="form-control" rows="3" id="notes" name="notes"></textarea>
+        <textarea maxlength="35" class="form-control" rows="3" id="notes" name="notes"></textarea>
+        <div class="text-count-wrapper error">
+</div>
       </div>
 
       <!-- Modal footer -->
