@@ -93,7 +93,7 @@ where variants.id = " . $value['variant']);
                 $string .= '#' . $counter . $separator;
                 $string .= $v['product_name'] . ' [' . $v['unit_name'] . '] x ' . $value['qty'] . ' ' . $v['unit_name'] . '' . $separator;
                 $string .= $variant_name . ' [ Rp.' . number_format($variant_price, 0, ',', '.') . '] x ' . ' [ Rp.' . number_format($variant_cost, 0, ',', '.') . ']  ' . $separator;
-
+                $string .= 'Notes: ' . $value['notes'] . $separator;
                 $total = $value['qty'] * ($v['price'] + $variant_cost + $variant_price);
                 $string .= $value['qty'] . ' x ' . number_format(($v['price'] + $variant_cost + $variant_price), 0, ',', '.') . ' = ' . number_format($total, 0, ',', '.') . $separator . $separator;
                 $counter++;

@@ -80,11 +80,11 @@ where variants.id = " . $item['variant']);
                             <h6 class="my-0"><?php echo $product['product_name']; ?> x <?php echo $item['qty']; ?> <?php echo $product['unit_name']; ?></h6>
                             <span class="text-muted pull-right" ><h1>&nbsp&nbsp<a style="color:red;" href="kill.php?kill=<?php echo $key; ?>"><i class="fa fa-trash align-top"></i></a></h1></span>
                           	<h6><small class="text-muted">Variant: <?php echo $variant_name; ?></small></h6>
-                            <h6><small class="text-muted">Notes: <?php echo $item['notes']; ?></small></h6>
+                            <h6><small class="text-muted" style="word-wrap:break-word !important;" >Notes: <?php echo substr($item['notes'], 0, 55); ?></small></h6>
                             <?php if ($variant_cost != 0): ?> <h6><small class="text-muted">Variant Cost: <b><?php echo number_format($variant_cost, 0, ',', '.'); ?></b></small></h6> <?php endif;?>
                             <?php if ($variant_price != 0): ?> <h6><small class="text-muted">Variant Price: <b><?php echo number_format($variant_price, 0, ',', '.'); ?></b></small></h6> <?php endif;?>
                             <span class="pull-left"><small class="text-muted"><?php echo $item['qty']; ?> x Rp. <?php echo number_format($product['price'], 0, ',', '.'); ?></small></span>
-                            <span class="pull-right"><span class="text-muted">Rp. <?php echo number_format($total_price, 0, ',', '.'); ?></span></span>
+                            <span class="pull-right"><span class="text-muted" style="margin-right: -30px;" >Rp. <?php echo number_format($total_price, 0, ',', '.'); ?></span></span>
                         </div>
 
                     </li>
@@ -94,18 +94,18 @@ where variants.id = " . $item['variant']);
             <?php endforeach;?>
             <li class="list-group-item d-flex justify-content-between">
               <span>Total (IDR)</span>
-              <strong>Rp. <?php echo number_format($subtotal, 0, ',', '.'); ?></strong>
+              <strong style="margin-right: 20px;">Rp. <?php echo number_format($subtotal, 0, ',', '.'); ?></strong>
             </li>
           </ul>
 
-          <form method="post" action="submit.php" class="card p-2" onsubmit="return confirm('Do you really want to submit the form?');">
+          <form style="border:0px !important; background-color:transparent !important"  method="post" action="submit.php" class="card p-2" onsubmit="return confirm('Do you really want to submit the form?');">
           <div class="g-recaptcha" data-sitekey="<?php echo $siteKey; ?>"></div>
             <script type="text/javascript"
                     src="https://www.google.com/recaptcha/api.js?hl=<?php echo $lang; ?>">
             </script>
             <button <?php if (sizeof($cart) == 0) {echo ' disabled ';}?> <?php if (sizeof($profile) == 0) {
     echo ' disabled ';
-}?> type="submit" class="btn btn-dark btn-lg btn-block">Send Inquiry</button>
+}?> type="submit"  style="margin-top:10px;" class="btn btn-primary btn-lg btn-block">Send Inquiry</button>
           </form>
         </div>
         <div class="col-md-6 order-md-1">
@@ -357,7 +357,7 @@ else
 
       <div class="form-group">
         <label for="notes">Notes:</label>
-        <textarea class="form-control" rows="3" id="notes" name="notes"></textarea>
+        <textarea maxlength="50" class="form-control" rows="3" id="notes" name="notes"></textarea>
       </div>
 
       <!-- Modal footer -->
