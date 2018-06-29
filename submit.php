@@ -17,7 +17,7 @@ if (isset($_SESSION['profile'])) {
     $_SESSION['profile'] = $profile;
 }
 
-require_once('telegram.php');
+require_once 'telegram.php';
 // Register API keys at https://www.google.com/recaptcha/admin
 $siteKey = getenv('CAPTCHA_SITEKEY');
 $secret = getenv('CAPTCHA_SECRET');
@@ -29,18 +29,16 @@ $recaptcha = new \ReCaptcha\ReCaptcha($secret);
 $resp = $recaptcha->verify($_POST['g-recaptcha-response'], $_SERVER['REMOTE_ADDR']);
 if ($resp->isSuccess()) {
 
-    if(sizeof($profile)==0)
-    {
-    $newURL = 'index.php';
-    header('Location: '.$newURL);
+    if (sizeof($profile) == 0) {
+        $newURL = 'index.php';
+        header('Location: ' . $newURL);
     }
-    if(sizeof($cart)==0)
-    {
+    if (sizeof($cart) == 0) {
         $newURL = 'index.php';
         header('Location: ' . $newURL);
     }
 
-    include_once('database.php');
+    include_once 'database.php';
 
     $result = R::getAll('select products.id , products.`code`, products.`name`, category.`name` as category_name , subcategory.`name` as subcategory_name , units.`name` as unit_name  , products.`price` from sma_products products
     left join sma_categories category
@@ -69,45 +67,58 @@ if ($resp->isSuccess()) {
 
     $date = date('m/d/Y h:i:s a', time());
 
-    $string = '### ORDER BARU ###'.$separator.$separator;
-    $string .= $date.$separator.$separator;
+    $string = '### ORDER BARU ###' . $separator . $separator;
+    $string .= $date . $separator . $separator;
 
     $counter = 1;
     $subtotal = 0;
     foreach ($cart as $key => $value) {
-        foreach ($products as $k => $v)
-        {
-            if($value['product_id'] == $v['id'])
-            {
-                $string .='#'.$counter.$separator;
-                $string .=$v['product_name'] .' ['.$v['unit_name'].'] x '.$value['qty'].' '.$v['unit_name'].''.$separator;
-                $total = $value['qty']*$v['price'];
-                $string .=$value['qty'].' x '.number_format($v['price'],0,',','.').' = '.number_format($total,0,',','.').$separator.$separator;
+        foreach ($products as $k => $v) {
+            if ($value['product_id'] == $v['id']) {
+
+                $variant_extra_cost = R::getAll("
+select variants.id as id, variants.name as variant_name,variants.price, variants.cost
+from sma_product_variants variants
+where variants.id = " . $value['variant']);
+
+                $variant_cost = 0;
+                $variant_name = '';
+                $variant_price = 0;
+                foreach ($variant_extra_cost as $keys => $valuex) {
+                    $variant_price = $valuex['price'];
+                    $variant_cost = $valuex['cost'];
+                    $variant_name = $valuex['variant_name'];
+                }
+
+                $string .= '#' . $counter . $separator;
+                $string .= $v['product_name'] . ' [' . $v['unit_name'] . '] x ' . $value['qty'] . ' ' . $v['unit_name'] . '' . $separator;
+                $string .= $variant_name . ' [ Rp.' . number_format($variant_price, 0, ',', '.') . '] x ' . ' [ Rp.' . number_format($variant_cost, 0, ',', '.') . ']  ' . $separator;
+
+                $total = $value['qty'] * ($v['price'] + $variant_cost + $variant_price);
+                $string .= $value['qty'] . ' x ' . number_format(($v['price'] + $variant_cost + $variant_price), 0, ',', '.') . ' = ' . number_format($total, 0, ',', '.') . $separator . $separator;
                 $counter++;
-                $subtotal = $subtotal+$total;
-            }        
+                $subtotal = $subtotal + $total;
+            }
         }
     }
-    $string .= 'TOTAL (IDR) = Rp. '.number_format($subtotal,0,',','.').$separator;
-    $string .= '(TOLONG DICEK KEMBALI DENGAN HARGA TOKO)'.$separator.$separator;
-    $string .= '### DETAIL PEMESAN ###'.$separator.$separator;
-    $string .= 'NAMA: '.$profile['name'] . $separator . $separator;
-    $string .='ALAMAT:'.$separator;
-    $string .= $profile['address'].$separator.$separator;
-    $string .= 'EKSPEDISI: ' .$separator. $profile['expedisi'] . $separator . $separator;
+    $string .= 'TOTAL (IDR) = Rp. ' . number_format($subtotal, 0, ',', '.') . $separator;
+    $string .= '(TOLONG DICEK KEMBALI DENGAN HARGA TOKO)' . $separator . $separator;
+    $string .= '### DETAIL PEMESAN ###' . $separator . $separator;
+    $string .= 'NAMA: ' . $profile['name'] . $separator . $separator;
+    $string .= 'ALAMAT:' . $separator;
+    $string .= $profile['address'] . $separator . $separator;
+    $string .= 'EKSPEDISI: ' . $separator . $profile['expedisi'] . $separator . $separator;
     $string .= 'HP: ' . $profile['phone'] . $separator . $separator;
     $string .= 'EMAIL: ' . $profile['email'] . $separator . $separator;
     $string .= '### HARAP FOLLOWUP VIA WA/SMS/TELP/EMAIL ###';
-    sendMessage($string,$chat_id);
-    $_SESSION['message']= 'Your order has been sent';
+    sendMessage($string, $chat_id);
+    $_SESSION['message'] = 'Your order has been sent';
     $newURL = 'index.php';
-    unset($_SESSION['cart']); 
-    header('Location: '.$newURL);
-}
-else {
+    unset($_SESSION['cart']);
+    header('Location: ' . $newURL);
+} else {
     $errors = $resp->getErrorCodes();
-    $_SESSION['message']= $errors[0];
+    $_SESSION['message'] = $errors[0];
     $newURL = 'index.php';
-header('Location: '.$newURL);
+    header('Location: ' . $newURL);
 }
-?>

@@ -11,6 +11,18 @@ foreach ($cat as $key => $value) {
     $categories[] = $category;
 }
 
+$var1 = R::getAll('select variants.id as id, variants.name as variant_name, variants.price as add_price from sma_product_variants variants');
+$variants = array();
+
+foreach ($var1 as $key => $value) {
+    $var2 = array(
+        'id'=>$value['id'],
+        'name'=>$value['variant_name'],
+      	'add_price'=>$value['add_price']
+    );
+    $variants[] = $var2;
+}
+
 $result = R::getAll('select products.id , products.`code`, products.`name`, category.`name` as category_name , subcategory.`name` as subcategory_name , units.`name` as unit_name  , products.`price` from sma_products products
 left join sma_categories category
 on products.subcategory_id = category.id
